@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="ProjetSession.Views.HistoriqueEntretiens"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:ProjetSession.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="using:ProjetSession.Models"
+    xmlns:convertisseurs="using:ProjetSession.Models.Convertisseurs"
+    xmlns:viewmodels="using:ProjetSession.ViewModels" xmlns:toolkit="using:AK.Toolkit.WinUI3"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    Foreground="{ThemeResource ApplicationForegroundThemeBrush}">
+
+    <Page.Resources>
+        <Style x:Key="StyleDeBoite" TargetType="Border">
+            <Setter Property="Background" Value="{ThemeResource CardBackgroundFillColorDefaultBrush}"/>
+            <Setter Property="BorderBrush" Value="{ThemeResource CardStrokeColorDefaultBrush}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="8"/>
+            <Setter Property="Padding" Value="16"/>
+        </Style>
+        <convertisseurs:EtatVehiculeToCouleurConverter x:Key="EtatVehiculeToCouleurConverter"/>
+        <convertisseurs:EntretienToVisibilityConverter x:Key="EntretienToVisibilityConverter"/>
+    </Page.Resources>
+    
+    <Grid Padding="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0" Margin="0 0 0 20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Grid.Column="0" Spacing="12">
+                <TextBlock Text="Historique des entretiens" Style="{ThemeResource TitleTextBlockStyle}" FontSize="28"/>
+                <StackPanel Orientation="Horizontal" Spacing="20">
+                    <AutoSuggestBox x:Name="VehicleSelecteur" Header="Sélectionner un véhicule" MinWidth="200" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Center" TextChanged="VehicleSelecteur_TextChanged" SuggestionChosen="VehicleSelecteur_SuggestionChosen" Text="{x:Bind ViewModel.VehiculeSelectionnee.Vin, Mode=TwoWay}" AutoMaximizeSuggestionArea="True"/>
+                    <StackPanel Orientation="Vertical" VerticalAlignment="Center">
+                        <TextBlock Text="État global du véhicule" Style="{ThemeResource BaseTextBlockStyle}" Margin="0 0 0 8"/>
+                        <ProgressBar Width="300" Value="{x:Bind ViewModel.VehiculeSelectionnee.EtatVehicule, Mode=OneWay}"/>
+                    </StackPanel>
+                </StackPanel>
+            </StackPanel>
+
+            <Button Grid.Column="1" Content="Nouvel entretien">
+                <Button.Flyout>
+                    <Flyout x:Name="flyoutAjouterEntretien">
+                        <Grid>
+                            <StackPanel Orientation="Vertical">
+                                <TextBlock Text="Ajouter un entretien" FontSize="30" FontWeight="Bold" Margin="20 20 0 0"/>
+                                <StackPanel Orientation="Horizontal" Margin="20 0 10 10" Spacing="8">
+                                    <TextBlock Text="Pour le véhicule : "/>
+                                    <TextBlock x:Name="textblockVehicule" Text="{x:Bind ViewModel.VehiculeSelectionnee.Vin, Mode=OneWay}"/>
+                                </StackPanel>
+                                <ComboBox x:Name="comboBoxTypeEntretien" Header="Type d'entretien" Margin="20 0 0 0" SelectedIndex="0">
+                                    <ComboBoxItem Content="Moteur"/>
+                                    <ComboBoxItem Content="Huile"/>
+                                    <ComboBoxItem Content="Transmission"/>
+                                    <ComboBoxItem Content="Pneus"/>
+                                </ComboBox>
+                                <StackPanel Orientation="Horizontal" Margin="20 20 0 0">
+                                    <DatePicker Header="Date de l'entretien" x:Name="datePickerEntretien" Date="{x:Bind ViewModel.ObtenirDateActuelle(), Mode=OneWay}" Language="fr-CA"/>
+                                </StackPanel>
+                                <toolkit:NumberBoxEx x:Name="numberboxKilometrage" Margin="20 20 0 0" Header="Kilométrage" Value="{x:Bind ViewModel.VehiculeSelectionnee.Kilometrage, Mode=TwoWay}" Minimum="0" IsDeleteButtonVisible="False" SpinButtonPlacementMode="Inline" SmallChange="10" HorizontalContentAlignment="Stretch" HorizontalAlignment="Left"/>
+                                <StackPanel Orientation="Horizontal">
+                                    <Button Content="Annuler l'entretien" Click="Annuler_Click" Margin="20"/>
+                                    <Button Content="Ajouter l'entretien" Click="Ajouter_Click" Margin="0"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </Grid>
+                    </Flyout>
+                </Button.Flyout>
+            </Button>
+        </Grid>
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <!-- Carte Moteur -->
+            <Border Grid.Column="0" Grid.Row="0" Style="{StaticResource StyleDeBoite}" Margin="0 0 10 10">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <StackPanel Grid.Row="0" Orientation="Horizontal" Spacing="12" Margin="0 0 0 16">
+                        <Image Source="ms-appx:///Assets/Icon-moteur_Clair.png" Tag="ThemeDynamique" Width="32" Height="32"/>
+                        <TextBlock Text="Moteur" Style="{ThemeResource SubtitleTextBlockStyle}"/>
+                        <Button Content="Supprimer cet entretien" Click="SupprimerEntretienMoteur_Click" Visibility="{x:Bind ViewModel.EntretienMoteurSelectionnee, Mode=OneWay, Converter={StaticResource EntretienToVisibilityConverter}}"/>
+                    </StackPanel>
+
+                    <ListView Grid.Row="1" x:Name="listViewEntretienMoteur" ItemsSource="{x:Bind ViewModel.ListeEntretiensMoteur}" SelectedItem="{x:Bind ViewModel.EntretienMoteurSelectionnee, Mode=TwoWay}">
+                        <ListView.ItemTemplate>
+                            <DataTemplate x:DataType="viewmodels:EntretienViewModel">
+                                <Grid Margin="0 4">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <TextBlock Grid.Column="0" Text="{x:Bind Date, Mode=OneWay}" Style="{ThemeResource CaptionTextBlockStyle}"/>
+                                    <ProgressBar Grid.Column="1" Value="{x:Bind Etat, Mode=OneWay}" Maximum="100" Margin="12 0" Height="4" Foreground="{x:Bind Etat, Converter={StaticResource EtatVehiculeToCouleurConverter}}"/>
+                                    <TextBlock Grid.Column="2" Text="{x:Bind Kilometrage, Mode=OneWay}" Style="{ThemeResource CaptionTextBlockStyle}"/>
+                                </Grid>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </Grid>
+            </Border>
+
+            <!-- Carte Huile -->
+            <Border Grid.Column="1" Grid.Row="0" Style="{StaticResource StyleDeBoite}" Margin="10 0 0 10">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <StackPanel Grid.Row="0" Orientation="Horizontal" Spacing="12" Margin="0 0 0 16">
+                        <Image Source="ms-appx:///Assets/Icon-huile-moteur_Clair.png" Tag="ThemeDynamique" Width="32" Height="32"/>
+                        <TextBlock Text="Huile moteur" Style="{ThemeResource SubtitleTextBlockStyle}"/>
+                        <Button Content="Supprimer cet entretien" Click="SupprimerEntretienHuile_Click" Visibility="{x:Bind ViewModel.EntretienHuileSelectionnee, Mode=OneWay, Converter={StaticResource EntretienToVisibilityConverter}}"/>
+                    </StackPanel>
+
+                    <ListView Grid.Row="1" x:Name="listViewEntretienHuile" ItemsSource="{x:Bind ViewModel.ListeEntretiensHuile}" SelectedItem="{x:Bind ViewModel.EntretienHuileSelectionnee, Mode=TwoWay}">
+                        <ListView.ItemTemplate>
+                            <DataTemplate x:DataType="viewmodels:EntretienViewModel">
+                                <Grid Margin="0 4">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <TextBlock Grid.Column="0" Text="{x:Bind Date, Mode=OneWay}" Style="{ThemeResource CaptionTextBlockStyle}"/>
+                                    <ProgressBar Grid.Column="1" Value="{x:Bind Etat, Mode=OneWay}" Maximum="100" Margin="12 0" Height="4" Foreground="{x:Bind Etat, Converter={StaticResource EtatVehiculeToCouleurConverter}}"/>
+                                    <TextBlock Grid.Column="2" Text="{x:Bind Kilometrage, Mode=OneWay}" Style="{ThemeResource CaptionTextBlockStyle}"/>
+                                </Grid>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </Grid>
+            </Border>
+
+            <!-- Carte Transmission -->
+            <Border Grid.Column="0" Grid.Row="1" Style="{StaticResource StyleDeBoite}" Margin="0 10 10 0">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <StackPanel Grid.Row="0" Orientation="Horizontal" Spacing="12" Margin="0 0 0 16">
+                        <Image Source="ms-appx:///Assets/Icon-transmission_Clair.png" Tag="ThemeDynamique" Width="32" Height="32"/>
+                        <TextBlock Text="Transmission" Style="{ThemeResource SubtitleTextBlockStyle}"/>
+                        <Button Content="Supprimer cet entretien" Click="SupprimerEntretienTransmission_Click" Visibility="{x:Bind ViewModel.EntretienTransmissionSelectionnee, Mode=OneWay, Converter={StaticResource EntretienToVisibilityConverter}}"/>
+                    </StackPanel>
+
+                    <ListView Grid.Row="1" x:Name="listViewEntretienTransmission" ItemsSource="{x:Bind ViewModel.ListeEntretiensTransmission}" SelectedItem="{x:Bind ViewModel.EntretienTransmissionSelectionnee, Mode=TwoWay}">
+                        <ListView.ItemTemplate>
+                            <DataTemplate x:DataType="viewmodels:EntretienViewModel">
+                                <Grid Margin="0 4">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <TextBlock Grid.Column="0" Text="{x:Bind Date, Mode=OneWay}" Style="{ThemeResource CaptionTextBlockStyle}"/>
+                                    <ProgressBar Grid.Column="1" Value="{x:Bind Etat, Mode=OneWay}" Maximum="100" Margin="12 0" Height="4" Foreground="{x:Bind Etat, Converter={StaticResource EtatVehiculeToCouleurConverter}}"/>
+                                    <TextBlock Grid.Column="2" Text="{x:Bind Kilometrage, Mode=OneWay}" Style="{ThemeResource CaptionTextBlockStyle}"/>
+                                </Grid>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </Grid>
+            </Border>
+
+            <!-- Carte Pneus -->
+            <Border Grid.Column="1" Grid.Row="1" Style="{StaticResource StyleDeBoite}" Margin="10 10 0 0">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <StackPanel Grid.Row="0" Orientation="Horizontal" Spacing="12" Margin="0 0 0 16">
+                        <Image Source="ms-appx:///Assets/Icon-pneus_Clair.png" Tag="ThemeDynamique" Width="32" Height="32"/>
+                        <TextBlock Text="Pneus" Style="{ThemeResource SubtitleTextBlockStyle}"/>
+                        <Button Content="Supprimer cet entretien" Click="SupprimerEntretienPneus_Click" Visibility="{x:Bind ViewModel.EntretienPneusSelectionnee, Mode=OneWay, Converter={StaticResource EntretienToVisibilityConverter}}"/>
+                    </StackPanel>
+
+                    <ListView Grid.Row="1" x:Name="listViewEntretienPneus" ItemsSource="{x:Bind ViewModel.ListeEntretiensPneus}" SelectedItem="{x:Bind ViewModel.EntretienPneusSelectionnee, Mode=TwoWay}">
+                        <ListView.ItemTemplate>
+                            <DataTemplate x:DataType="viewmodels:EntretienViewModel">
+                                <Grid Margin="0 4">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <TextBlock Grid.Column="0" Text="{x:Bind Date, Mode=OneWay}" Style="{ThemeResource CaptionTextBlockStyle}"/>
+                                    <ProgressBar Grid.Column="1" Value="{x:Bind Etat, Mode=OneWay}" Maximum="100" Margin="12 0" Height="4" Foreground="{x:Bind Etat, Converter={StaticResource EtatVehiculeToCouleurConverter}}"/>
+                                    <TextBlock Grid.Column="2" Text="{x:Bind Kilometrage, Mode=OneWay}" Style="{ThemeResource CaptionTextBlockStyle}"/>
+                                </Grid>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </Grid>
+            </Border>
+        </Grid>
+    </Grid>
+</Page>

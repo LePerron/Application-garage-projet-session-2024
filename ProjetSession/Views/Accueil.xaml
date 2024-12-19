@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="ProjetSession.Views.Accueil"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:convertisseurs="using:ProjetSession.Models.Convertisseurs"
+    xmlns:viewmodels="using:ProjetSession.ViewModels"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Page.Resources>
+        <Style x:Key="StyleDeBoite" TargetType="Border">
+            <Setter Property="Background" Value="{ThemeResource LayerFillColorDefaultBrush}"/>
+            <Setter Property="BorderBrush" Value="{ThemeResource CardStrokeColorDefaultBrush}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="12"/>
+            <Setter Property="Padding" Value="24"/>
+        </Style>
+
+        <Style x:Key="StyleDeNombre" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="28"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Foreground" Value="{ThemeResource TextFillColorPrimaryBrush}"/>
+        </Style>
+
+        <Style x:Key="StyleDeLabel" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="Foreground" Value="{ThemeResource TextFillColorSecondaryBrush}"/>
+        </Style>
+
+        <Style x:Key="StyleItemDeListe" TargetType="Grid">
+            <Setter Property="Background" Value="{ThemeResource CardBackgroundFillColorDefaultBrush}"/>
+            <Setter Property="BorderBrush" Value="{ThemeResource CardStrokeColorDefaultBrush}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="8"/>
+            <Setter Property="Padding" Value="12"/>
+            <Setter Property="Margin" Value="0,4"/>
+        </Style>
+
+        <convertisseurs:TypeEntretienToImageConverter x:Key="TypeEntretienToImageConverter"/>
+        <convertisseurs:EtatVehiculeToCouleurConverter x:Key="EtatVehiculeToCouleurConverter"/>
+        <convertisseurs:KilometrageToFormatConverter x:Key="KilometrageToFormatConverter"/>
+        <convertisseurs:ArgentToFormatConverter x:Key="ArgentToFormatConverter"/>
+    </Page.Resources>
+
+    
+    <Grid Margin="32">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Margin="0 0 0 24">
+            <TextBlock Text="Tableau de Bord" Style="{ThemeResource DisplayTextBlockStyle}" Foreground="{ThemeResource TextFillColorPrimaryBrush}"/>
+            <TextBlock Text="Vue d'ensemble du garage" Style="{ThemeResource SubtitleTextBlockStyle}" Foreground="{ThemeResource TextFillColorSecondaryBrush}" Margin="8 8 0 0"/>
+        </StackPanel>
+
+        <Border Grid.Row="1" Style="{StaticResource StyleDeBoite}" Margin="0 0 0 24">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0" Spacing="16">
+                    <StackPanel>
+                        <TextBlock Text="Valeur du garage" Style="{StaticResource StyleDeLabel}"/>
+                        <TextBlock Text="{x:Bind ViewModel.ValeurDuGarage, Converter={StaticResource ArgentToFormatConverter}}" Style="{StaticResource StyleDeNombre}" Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}"/>
+                    </StackPanel>
+                    <StackPanel>
+                        <TextBlock Text="Nombre de véhicules" Style="{StaticResource StyleDeLabel}"/>
+                        <TextBlock Text="{x:Bind ViewModel.NombreDeVehicules}" Style="{StaticResource StyleDeNombre}"/>
+                    </StackPanel>
+                </StackPanel>
+
+                <StackPanel Grid.Column="1" Spacing="16">
+                    <StackPanel>
+                        <TextBlock Text="Véhicules de promenade" Style="{StaticResource StyleDeLabel}"/>
+                        <TextBlock Text="{x:Bind ViewModel.NombreVehiculePromenade}" Style="{StaticResource StyleDeNombre}"/>
+                    </StackPanel>
+                    <StackPanel>
+                        <TextBlock Text="Véhicules industriels" Style="{StaticResource StyleDeLabel}"/>
+                        <TextBlock Text="{x:Bind ViewModel.NombreVehiculeIndustriels}" Style="{StaticResource StyleDeNombre}"/>
+                    </StackPanel>
+                </StackPanel>
+            </Grid>
+        </Border>
+        
+        
+        <Grid Grid.Row="2" Margin="0 0 0 0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            
+            <Border Grid.Column="0" Style="{StaticResource StyleDeBoite}" Margin="0 0 12 0">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Grid.Row="0" Text="Derniers Véhicules" Style="{ThemeResource SubtitleTextBlockStyle}" Foreground="{ThemeResource TextFillColorPrimaryBrush}" Margin="0 0 0 16"/>
+
+                    <Grid Grid.Row="1" Margin="0 0 0 8">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="Marque" Style="{StaticResource StyleDeLabel}" Margin="10 0 0 0"/>
+                        <TextBlock Grid.Column="1" Text="Modèle" Style="{StaticResource StyleDeLabel}" Margin="3 0 0 0"/>
+                        <TextBlock Grid.Column="2" Text="VIN" Style="{StaticResource StyleDeLabel}" Margin="-4 0 0 0"/>
+                    </Grid>
+                    <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Hidden">
+                        <ItemsRepeater ItemsSource="{x:Bind ViewModel.ListeDernierVehiculeAjoute}">
+                            <ItemsRepeater.ItemTemplate>
+                                <DataTemplate x:DataType="viewmodels:VehiculeTerrestreViewModel">
+                                    <Grid Style="{StaticResource StyleItemDeListe}">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Grid.Column="0" Text="{x:Bind Marque}" Foreground="{ThemeResource TextFillColorPrimaryBrush}"/>
+                                        <TextBlock Grid.Column="1" Text="{x:Bind Modele}" Foreground="{ThemeResource TextFillColorPrimaryBrush}"/>
+                                        <TextBlock Grid.Column="2" Text="{x:Bind Vin}" Foreground="{ThemeResource TextFillColorPrimaryBrush}"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </ItemsRepeater.ItemTemplate>
+                        </ItemsRepeater>
+                    </ScrollViewer>
+                </Grid>
+            </Border>
+
+
+            <Border Grid.Column="1" Style="{StaticResource StyleDeBoite}" Margin="0 0 12 0">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Grid.Row="0" Text="Derniers Entretiens" Style="{ThemeResource SubtitleTextBlockStyle}" Foreground="{ThemeResource TextFillColorPrimaryBrush}" Margin="0 0 0 16"/>
+
+                    <Grid Grid.Row="1" Margin="0 0 0 8">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="Type" Style="{StaticResource StyleDeLabel}" Margin="25 0 0 0"/>
+                        <TextBlock Grid.Column="1" Text="Date" Style="{StaticResource StyleDeLabel}" Margin="20 0 0 0"/>
+                        <TextBlock Grid.Column="2" Text="VIN" Style="{StaticResource StyleDeLabel}" Margin="45 0 0 0"/>
+                    </Grid>
+                    <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Hidden">
+                        <ItemsRepeater ItemsSource="{x:Bind ViewModel.ListeDernierEntretienRecent}">
+                            <ItemsRepeater.ItemTemplate>
+                                <DataTemplate x:DataType="viewmodels:EntretienViewModel">
+                                    <Grid Style="{StaticResource StyleItemDeListe}">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Border Grid.Column="0" HorizontalAlignment="Left" BorderThickness="2" Background="Transparent" CornerRadius="28" Padding="8">
+                                            <Image Source="{x:Bind ImageTypeEntretien}" Tag="ThemeDynamique" MaxWidth="40" MaxHeight="40"/>
+                                        </Border>
+                                        <TextBlock Grid.Column="1" Text="{x:Bind Date}" Foreground="{ThemeResource TextFillColorPrimaryBrush}" VerticalAlignment="Center"/>
+                                        <TextBlock Grid.Column="2" Text="{x:Bind Vin}" Foreground="{ThemeResource TextFillColorPrimaryBrush}" VerticalAlignment="Center"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </ItemsRepeater.ItemTemplate>
+                        </ItemsRepeater>
+                    </ScrollViewer>
+                </Grid>
+            </Border>
+
+
+            <Border Grid.Column="2" Style="{StaticResource StyleDeBoite}" Margin="0 0 0 0">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Grid.Row="0" Text="Entretiens Requis" Style="{ThemeResource SubtitleTextBlockStyle}" Foreground="{ThemeResource TextFillColorPrimaryBrush}" Margin="0 0 0 16"/>
+
+                    <Grid Grid.Row="1" Margin="0 0 0 8">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="Type" Style="{StaticResource StyleDeLabel}" Margin="25 0 0 0"/>
+                        <TextBlock Grid.Column="1" Text="Etat" Style="{StaticResource StyleDeLabel}" Margin="15 0 0 0"/>
+                        <TextBlock Grid.Column="2" Text="VIN" Style="{StaticResource StyleDeLabel}" Margin="50 0 0 0"/>
+                    </Grid>
+                    <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Hidden">
+                        <ItemsRepeater Grid.Row="2" ItemsSource="{x:Bind ViewModel.ListeEntretienRequis}">
+                            <ItemsRepeater.ItemTemplate>
+                                <DataTemplate x:DataType="viewmodels:EntretienViewModel">
+                                    <Grid Style="{StaticResource StyleItemDeListe}">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="0.5*"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Border Grid.Column="0" HorizontalAlignment="Left" BorderThickness="2" Background="Transparent" CornerRadius="28" Padding="8">
+                                            <Image Source="{x:Bind ImageTypeEntretien}" Tag="ThemeDynamique" MaxWidth="40" MaxHeight="40"/>
+                                        </Border>
+                                        <ProgressBar Grid.Column="1" Value="{x:Bind Etat}" Width="200" Foreground="{x:Bind Etat, Converter={StaticResource EtatVehiculeToCouleurConverter}}" HorizontalAlignment="Center"/>
+                                        <TextBlock Grid.Column="2" Text="{x:Bind Vin}" Foreground="{ThemeResource TextFillColorPrimaryBrush}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </ItemsRepeater.ItemTemplate>
+                        </ItemsRepeater>
+                    </ScrollViewer>
+                </Grid>
+            </Border>
+        </Grid>
+
+        <Grid Grid.Row="3" Padding="20" HorizontalAlignment="Center">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            
+            <Border Grid.Column="0" Style="{StaticResource StyleDeBoite}" Margin="0 0 12 0">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Border Grid.Column="0" CornerRadius="8" Margin="0 0 20 0">
+                        <Image Source="{x:Bind ViewModel.VoiturePlusPuissante.CheminImage}" ImageFailed="ImageVoiture_ImageFailed" Stretch="UniformToFill" MaxHeight="300" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                    </Border>
+                    <StackPanel Grid.Column="1" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Stretch" Spacing="10">
+                        <TextBlock Text="Voiture la Plus Puissante" Style="{ThemeResource SubtitleTextBlockStyle}" Foreground="{ThemeResource TextFillColorPrimaryBrush}" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold"/>
+
+                        <StackPanel Orientation="Horizontal" Spacing="15" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <TextBlock Text="{x:Bind ViewModel.VoiturePlusPuissante.Modele}" Style="{StaticResource StyleDeLabel}" FontWeight="ExtraBold" VerticalAlignment="Center" FontSize="36" HorizontalAlignment="Center" TextWrapping="Wrap"/>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal" Spacing="15" HorizontalAlignment="Center">
+
+                            <TextBlock Text="{x:Bind ViewModel.VoiturePlusPuissante.ChevauxVapeur}" Style="{StaticResource StyleDeNombre}" Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}" VerticalAlignment="Center" FontSize="32" FontWeight="Black" CharacterSpacing="120"/>
+                            <TextBlock Text="Ch." Style="{StaticResource StyleDeLabel}" VerticalAlignment="Center" FontSize="32" FontWeight="ExtraBlack" CharacterSpacing="120"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Grid>
+            </Border>
+
+            <Border Grid.Column="1" Style="{StaticResource StyleDeBoite}" Margin="0 0 0 0" Padding="15">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Border Grid.Column="0" CornerRadius="8" Margin="0 0 20 0">
+                        <Image Source="{x:Bind ViewModel.VoiturePlusChere.CheminImage}" ImageFailed="ImageVoiture_ImageFailed" Stretch="UniformToFill" MaxHeight="300" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                    </Border>
+                    <StackPanel Grid.Column="1" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Stretch" Spacing="10">
+                        <TextBlock Text="Voiture la Plus Chère" Style="{ThemeResource SubtitleTextBlockStyle}" Foreground="{ThemeResource TextFillColorPrimaryBrush}" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold"/>
+                        <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="20">
+                            <TextBlock Text="{x:Bind ViewModel.VoiturePlusChere.Modele}" Style="{StaticResource StyleDeLabel}" FontWeight="ExtraBold"  FontSize="36" TextWrapping="Wrap" HorizontalAlignment="Center"/>
+                            <TextBlock Text="{x:Bind ViewModel.VoiturePlusChere.PrixConstructeurAchat, Converter={StaticResource ArgentToFormatConverter}}" FontSize="32" Style="{StaticResource StyleDeNombre}" Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}" FontWeight="Black" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Grid>
+            </Border>
+
+        </Grid>
+    </Grid>
+</Page>

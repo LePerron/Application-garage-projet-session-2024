@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="ProjetSession.Views.GarageInventaire"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:ProjetSession.Views"
+    xmlns:local1="using:ProjetSession.Models"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"  
+    xmlns:viewmodels="using:ProjetSession.ViewModels"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid x:Name="root">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="auto"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid Grid.ColumnSpan="3" Grid.Column="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+            
+            <StackPanel Orientation="Horizontal" Grid.Column="0" VerticalAlignment="Top" Margin="20 15" Spacing="40">
+                <TextBlock FontSize="40" FontWeight="Bold" HorizontalAlignment="Left">Véhicules dans le garage</TextBlock>
+                <Button Width="100" Padding="8" FontWeight="Medium" VerticalAlignment="Bottom" BorderBrush="{ThemeResource ButtonBorderBrush}" Background="{ThemeResource ControlAltFillColorTertiary}" Click="Ajouter_Click">Ajouter</Button>
+                <Button Width="100" Padding="8" FontWeight="Medium" VerticalAlignment="Bottom" BorderBrush="{ThemeResource ButtonBorderBrush}" Background="{ThemeResource ControlAltFillColorTertiary}" Visibility="{x:Bind ViewModel.VehiculeEstSelectionnee, Mode=OneWay}" Click="SupprimerVehicule_Click">Supprimer</Button>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Grid.Column="1" Padding="0 0 100 0" HorizontalAlignment="Stretch">
+                <AutoSuggestBox x:Name="VehicleSelecteur" Header="Chercher un véhicule" MinWidth="200" VerticalAlignment="Center" TextChanged="VehicleSelecteur_TextChanged" SuggestionChosen="VehicleSelecteur_SuggestionChosen" Text="{x:Bind ViewModel.VehiculeRechercheSelectionnee.Modele, Mode=TwoWay}" AutoMaximizeSuggestionArea="True"/>
+            </StackPanel>
+        </Grid>
+       
+        
+        <Grid x:Name="inventaire" Grid.Row="1" Grid.ColumnSpan="2" Grid.RowSpan="2" Padding="10 0 0 0" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+            <GridView x:Name="GridViewInventaire" ItemsSource="{x:Bind ViewModel.VehiculesValides, Mode=OneWay}" SelectedItem="{x:Bind ViewModel.VehiculeSelectionnee, Mode=TwoWay}" DoubleTapped="GridViewItem_DoubleTapped">
+                <GridView.ItemContainerStyle>
+                    <Style TargetType="GridViewItem">
+                        <Setter Property="Margin" Value="12 12 6 6"/>
+                    </Style>
+                </GridView.ItemContainerStyle>
+
+                
+                <GridView.ItemTemplate>
+                    <DataTemplate x:DataType="viewmodels:VehiculeTerrestreViewModel">
+                        <Grid Width="250" MinHeight="350" BorderThickness="2" BorderBrush="{ThemeResource AccentAAFillColorDisabledBrush}" Background="{ThemeResource CardBackgroundFillColorDefault}" CornerRadius="10">
+                            <Image Name="ImageVoiture" Source="{Binding CheminImage}" VerticalAlignment="Top" HorizontalAlignment="Stretch" ImageFailed="ImageVoiture_ImageFailed"/>
+                            <StackPanel Orientation="Vertical" Spacing="4" VerticalAlignment="Bottom" Padding="10">
+                                <TextBlock FontWeight="Medium" Text="{x:Bind Marque.ToUpper()}"/>
+                                <StackPanel Orientation="Horizontal" Spacing="8">
+                                    <TextBlock FontWeight="Bold" FontSize="18" Text="{x:Bind Modele}" TextWrapping="WrapWholeWords"/>
+                                    <TextBlock FontWeight="Bold" FontSize="18" Text="{x:Bind Annee}" TextWrapping="Wrap"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Spacing="4" Margin="0 10 0 0">
+                                    <TextBlock Text="Couleur :"/>
+                                    <TextBlock FontWeight="SemiBold" Text="{x:Bind Couleur}"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Spacing="4">
+                                    <TextBlock Text="Odomètre :"/>
+                                    <TextBlock FontWeight="SemiBold" Text="{x:Bind Kilometrage}"/>
+                                    <TextBlock Text="km"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Spacing="4">
+                                    <TextBlock Text="Consommation :"/>
+                                    <TextBlock FontWeight="SemiBold" Text="{x:Bind Consommation}"/>
+                                    <TextBlock Text="L/100km"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Spacing="4">
+                                    <TextBlock Text="Type :"/>
+                                    <TextBlock FontWeight="SemiBold" Text="{x:Bind Carburant}"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Spacing="4">
+                                    <TextBlock Text="Boite :"/>
+                                    <TextBlock FontWeight="SemiBold" Text="{x:Bind BoiteVitesse}"/>
+                                    <TextBlock Text="•"/>
+                                    <TextBlock FontWeight="SemiBold" Text="{x:Bind Transmission}"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Spacing="4">
+                                    <TextBlock Text="Moteur :"/>
+                                    <TextBlock FontWeight="SemiBold" Text="{x:Bind ChevauxVapeur}"/>
+                                    <TextBlock Text="Ch."/>
+                                    <TextBlock Text="•"/>
+                                    <TextBlock FontWeight="SemiBold" Text="{x:Bind NombreCylindres}"/>
+                                    <TextBlock Text="cylindres"/>
+                                </StackPanel>
+
+                            </StackPanel>
+                        </Grid>
+                    </DataTemplate>
+                </GridView.ItemTemplate>
+            </GridView>
+        </Grid>
+
+    </Grid>
+</Page>

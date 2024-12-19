@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Window
+    x:Class="ProjetSession.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:ProjetSession"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:viewmodels="using:ProjetSession.ViewModels" xmlns:localisation="using:Humanizer.Localisation"
+    mc:Ignorable="d"
+    Title="Garage de Rick   -   Bienvenue chez Rick !">
+
+    <!--Une partie du code provient des notes de cours pour permettre de faire la nav-->
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+        <NavigationView x:Name="NavView" PaneDisplayMode="Top" IsBackButtonVisible="Collapsed" IsSettingsVisible="False" AlwaysShowHeader="False" Loaded="NavView_Loaded" SelectionChanged="NavView_SelectionChanged">
+            
+            <NavigationView.Resources>
+                <Thickness x:Key="NavigationViewContentMargin">20 0</Thickness>
+            </NavigationView.Resources>
+
+            <NavigationView.MenuItems>
+                <NavigationViewItem Tag="ProjetSession.Views.Accueil" Content="Accueil" Icon="Home"/>
+                <NavigationViewItem Tag="ProjetSession.Views.GarageInventaire" Content="Inventaire du garage" Icon="AllApps"/>
+                <NavigationViewItem Tag="ProjetSession.Views.AjouterAuGarage" Content="Ajouter au garage" Icon="Add"/>
+                <NavigationViewItem Tag="ProjetSession.Views.HistoriqueEntretiens" Content="Historique des entretiens" Icon="GoToToday"/>
+            </NavigationView.MenuItems>
+
+            <NavigationView.PaneFooter>
+                <Button x:Name="BtnChangerTheme" Click="Changer_theme" Content="Mode Sombre"/>
+            </NavigationView.PaneFooter>
+
+            <Frame x:Name="ContentFrame" NavigationFailed="ContentFrame_NavigationFailed"/>
+        </NavigationView>
+    </Grid>
+</Window>

@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="ProjetSession.Models.Constructeur">
+    <Position X="6.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAACAAEAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Constructeur.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ProjetSession.Models.Entretiens">
+    <Position X="10" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAIAAAAAAAAARAAABAAAAAAAAgAA=</HashCode>
+      <FileName>Models\Entretiens.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ProjetSession.Models.Utilities">
+    <Position X="10" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAgAAAAAAAAAAAAAAAAAAQAAAACAAAAAAAAAAIA=</HashCode>
+      <FileName>Models\Utilities.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ProjetSession.Models.ControlExtensions">
+    <Position X="10" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Utilities.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ProjetSession.Models.VehiculeConstruction">
+    <Position X="10.5" Y="8.25" Width="1.5" />
+    <InheritanceLine Type="ProjetSession.Models.VehiculeTerrestre" FixedFromPoint="true">
+      <Path>
+        <Point X="9.438" Y="7.363" />
+        <Point X="9.438" Y="7.875" />
+        <Point X="11.25" Y="7.875" />
+        <Point X="11.25" Y="8.25" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAQAAAAAAAAABAAAAAAAAABAAA=</HashCode>
+      <FileName>Models\VehiculeConstruction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ProjetSession.Models.VehiculeLourd">
+    <Position X="6" Y="8.25" Width="1.5" />
+    <InheritanceLine Type="ProjetSession.Models.VehiculeTerrestre" FixedFromPoint="true">
+      <Path>
+        <Point X="8.562" Y="7.363" />
+        <Point X="8.562" Y="7.875" />
+        <Point X="6.75" Y="7.875" />
+        <Point X="6.75" Y="8.25" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAEAAAAAAAAAAAAAQAAAACAAAAAAQAQAAA=</HashCode>
+      <FileName>Models\VehiculeLourd.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ProjetSession.Models.VehiculePromenade">
+    <Position X="8.25" Y="8.25" Width="1.5" />
+    <InheritanceLine Type="ProjetSession.Models.VehiculeTerrestre" ManuallyRouted="true" FixedFromPoint="true">
+      <Path>
+        <Point X="9" Y="7.363" />
+        <Point X="9" Y="8.25" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AABAAAAAAAAAAFAAAAAAACAAAAAAAAAAAAAAAAEAAAA=</HashCode>
+      <FileName>Models\VehiculePromenade.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ProjetSession.Models.VehiculeTerrestre">
+    <Position X="8.25" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAEACABAAIAQIAAIAEgAAIABABEABAoAgBIOFAgAA=</HashCode>
+      <FileName>Models\VehiculeTerrestre.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

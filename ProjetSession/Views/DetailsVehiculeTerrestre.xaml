@@ -1,0 +1,381 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="ProjetSession.Views.DetailsVehiculeTerrestre"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:ProjetSession.Views"
+    xmlns:local1="using:ProjetSession.Models"
+    xmlns:convertisseurs="using:ProjetSession.Models.Convertisseurs"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewmodels="using:ProjetSession.ViewModels" 
+    mc:Ignorable="d"
+    Background="{ThemeResource CardStrokeColorDefaultSolidBrush}"
+    Foreground="{ThemeResource ApplicationForegroundThemeBrush}">
+
+
+    <Page.Resources>
+        <convertisseurs:ArgentToFormatConverter x:Key="ArgentToFormatConverter"/>
+    </Page.Resources>
+    
+    <ScrollView>
+        <Grid x:Name="root">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition MinWidth="350" Width="*"/>
+                <ColumnDefinition MinWidth="350" Width="*"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+
+
+            <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" ColumnSpacing="50" Margin="20" HorizontalAlignment="Left">
+                <Image Source="{x:Bind ViewModel.VehiculeSelectionnee.CheminImage}" Stretch="Uniform" ImageFailed="ImageVoiture_ImageFailed" Height="350" Width="580"/>
+                <Border BorderBrush = "{ThemeResource ControlAAStrokeColorDisabledBrush}" BorderThickness="3 3 3 3" CornerRadius="8" Height="333" Width="583"/>
+            </Grid>
+            <StackPanel Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2" Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Left">
+                <TextBlock FontWeight="ExtraBold" VerticalAlignment="Center" HorizontalAlignment="Center" CharacterSpacing="250" FontSize="50" Text="{x:Bind ViewModel.VehiculeSelectionnee.Marque.ToUpper(), Mode=OneWay}"/>
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" Spacing="10">
+                    <TextBlock FontWeight="Normal" CharacterSpacing="200" VerticalAlignment="Bottom" FontSize="18" Text="MODÈLE"/>
+                    <TextBlock FontWeight="Normal" CharacterSpacing="200" VerticalAlignment="Top" FontSize="20" Text="| "/>
+                    <TextBlock FontWeight="Bold" CharacterSpacing="300" FontSize="20" Text="{x:Bind ViewModel.VehiculeSelectionnee.Modele, Mode=OneWay}"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="20" Spacing="30">
+                    <Button CornerRadius="12" Width="90" BorderBrush = "{ThemeResource ControlAAStrokeColorDisabledBrush}" BorderThickness="3 0 0 3" Click="BtnModifier_Click">Modifier</Button>
+                    <Button CornerRadius="12" Width="90" BorderBrush = "{ThemeResource ControlAAStrokeColorDisabledBrush}" BorderThickness="3 0 0 3" Click="BtnSupprimer_Click">Supprimer</Button>
+                </StackPanel>
+            </StackPanel>
+
+            <Grid Grid.Row="1" Grid.Column="0" BorderBrush="{ThemeResource ControlAAStrokeColorDefault}" BorderThickness="0 0 2.5 2.5" Margin="20 0 0 0" Padding="0 10 20 8" RowSpacing="12" ColumnSpacing="18">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Border Grid.Row="0" Grid.Column="0" BorderBrush = "{ThemeResource ControlAAStrokeColorDisabledBrush}" BorderThickness="3 0 0 3" CornerRadius="10" Background="{ThemeResource CardBackgroundFillColorSecondary}" Padding="10 2 10 2" HorizontalAlignment="Stretch">
+                    <TextBlock FontWeight="ExtraBlack" FontSize="18" Text="Année"/>
+                </Border>
+                <Border Grid.Row="0" Grid.Column="1" BorderBrush = "{ThemeResource ControlAAStrokeColorDisabledBrush}" BorderThickness="3 0 0 3" CornerRadius="10" Background="{ThemeResource CardBackgroundFillColorSecondary}" Padding="10 2 10 2" HorizontalAlignment="Stretch">
+                    <TextBlock FontWeight="Black" FontSize="18" Text="{x:Bind ViewModel.VehiculeSelectionnee.Annee, Mode=OneWay}"/>
+                </Border>
+
+                <Border Grid.Row="1" Grid.Column="0" BorderBrush = "{ThemeResource ControlAAStrokeColorDisabledBrush}" BorderThickness="3 0 0 3" CornerRadius="10" Background="{ThemeResource CardBackgroundFillColorSecondary}" Padding="10 2 10 2" HorizontalAlignment="Stretch">
+                    <TextBlock FontWeight="ExtraBlack" FontSize="18" Text="Couleur"/>
+                </Border>
+                <Border Grid.Row="1" Grid.Column="1" BorderBrush = "{ThemeResource ControlAAStrokeColorDisabledBrush}" BorderThickness="3 0 0 3" CornerRadius="10" Background="{ThemeResource CardBackgroundFillColorSecondary}" Padding="10 2 10 2" HorizontalAlignment="Stretch">
+                    <TextBlock FontWeight="Black" FontSize="18" Text="{x:Bind ViewModel.VehiculeSelectionnee.Couleur, Mode=OneWay}"/>
+                </Border>
+
+                <Border Grid.Row="2" Grid.Column="0" BorderBrush = "{ThemeResource ControlAAStrokeColorDisabledBrush}" BorderThickness="3 0 0 3" CornerRadius="10" Background="{ThemeResource CardBackgroundFillColorSecondary}" Padding="10 2 10 2" HorizontalAlignment="Stretch">
+                    <TextBlock FontWeight="ExtraBlack" FontSize="18" Text="Odomètre"/>
+                </Border>
+                <Border Grid.Row="2" Grid.Column="1" BorderBrush = "{ThemeResource ControlAAStrokeColorDisabledBrush}" BorderThickness="3 0 0 3" CornerRadius="10" Background="{ThemeResource CardBackgroundFillColorSecondary}" Padding="10 2 10 2" HorizontalAlignment="Stretch">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock FontWeight="Black" FontSize="18" Text="{x:Bind ViewModel.VehiculeSelectionnee.Kilometrage, Mode=OneWay}"/>
+                        <TextBlock FontWeight="ExtraBlack" FontSize="17" Text=" km"/>
+                    </StackPanel>
+                </Border>
+            </Grid>
+
+            <Grid Grid.Row="1" Grid.Column="1" BorderBrush="{ThemeResource ControlAAStrokeColorDefault}" BorderThickness="0 0 2.5 2.5" Padding="20 10 20 8" RowSpacing="12" ColumnSpacing="18">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid Grid.Row="0" Grid.Column="0" Grid.RowSpan="1" Grid.ColumnSpan="2" BorderBrush = "{ThemeResource ControlAAStrokeColorDisabledBrush}" BorderThickness="3 0 0 3" CornerRadius="10" Background="{ThemeResource CardBackgroundFillColorSecondary}" Padding="10 2 10 2">
+                    <TextBlock FontWeight="ExtraBlack" FontSize="18" Text="VIN" TextAlignment="Left"/>
+                    <TextBlock FontWeight="Black" FontSize="18" Text="{x:Bind ViewModel.VehiculeSelectionnee.Vin, Mode=OneWay}" VerticalAlignment="Center" TextAlignment="Right"  HorizontalAlignment="Right"/>
+                </Grid>
+
+                <Border Grid.Row="1" Grid.Column="0" BorderBrush = "{ThemeResource ControlAAStrokeColorDisabledBrush}" BorderThickness="3 0 0 3" CornerRadius="10" Background="{ThemeResource CardBackgroundFillColorSecondary}" Padding="10 2 10 2">
+                    <TextBlock FontWeight="ExtraBlack" FontSize="18" Text="Consommation"/>
+                </Border>
+                <Border Grid.Row="1" Grid.Column="1" BorderBrush = "{ThemeResource ControlAAStrokeColorDisabledBrush}" BorderThickness="3 0 0 3" CornerRadius="10" Background="{ThemeResource CardBackgroundFillColorSecondary}" Padding="10 2 10 2">
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <TextBlock FontWeight="Black" FontSize="18" Text="{x:Bind ViewModel.VehiculeSelectionnee.Consommation, Mode=OneWay}"/>
+                        <TextBlock FontWeight="ExtraBlack" FontSize="17" Text=" L/100km"/>
+                    </StackPanel>
+                </Border>
+
+                <Border Grid.Row="2" Grid.Column="0" BorderBrush = "{ThemeResource ControlAAStrokeColorDisabledBrush}" BorderThickness="3 0 0 3" CornerRadius="10" Background="{ThemeResource CardBackgroundFillColorSecondary}" Padding="10 2 10 2">
+                    <TextBlock FontWeight="ExtraBlack" FontSize="18" Text="Carburant"/>
+                </Border>
+                <Border Grid.Row="2" Grid.Column="1" BorderBrush = "{ThemeResource ControlAAStrokeColorDisabledBrush}" BorderThickness="3 0 0 3" CornerRadius="10" Background="{ThemeResource CardBackgroundFillColorSecondary}" Padding="10 2 10 2">
+                    <TextBlock FontWeight="Black" FontSize="18" Text="{x:Bind ViewModel.VehiculeSelectionnee.Carburant, Mode=OneWay}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                </Border>
+            </Grid>
+
+            <Grid Grid.Row="1" Grid.Column="2" BorderBrush="{ThemeResource ControlAAStrokeColorDefault}" BorderThickness="0 0 2.5 2.5" Padding="20 10 20 8" RowSpacing="12" ColumnSpacing="18">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition MinWidth="170" Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Border Grid.Row="0" Grid.Column="0" BorderBrush = "{ThemeResource ControlAAStrokeColorDisabledBrush}"  BorderThickness="3 0 0 3" CornerRadius="10" Background="{ThemeResource CardBackgroundFillColorSecondary}" Padding="10 2 10 2">
+                    <TextBlock FontWeight="ExtraBlack" FontSize="18" Text="Date d'achat"/>
+                </Border>
+                <Border Grid.Row="0" Grid.Column="1" BorderBrush = "{ThemeResource ControlAAStrokeColorDisabledBrush}" BorderThickness="3 0 0 3" CornerRadius="10" Background="{ThemeResource CardBackgroundFillColorSecondary}" Padding="10 2 10 2">
+                    <TextBlock FontWeight="Black" FontSize="18" Text="{x:Bind ViewModel.VehiculeSelectionnee.DateToString(), Mode=OneWay}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                </Border>
+
+                <Border Grid.Row="1" Grid.Column="0" BorderBrush = "{ThemeResource ControlAAStrokeColorDisabledBrush}" BorderThickness="3 0 0 3" CornerRadius="10" Background="{ThemeResource CardBackgroundFillColorSecondary}" Padding="10 2 10 2">
+                    <TextBlock FontWeight="ExtraBlack" FontSize="18" Text="Chevaux-vapeur"/>
+                </Border>
+                <Border Grid.Row="1" Grid.Column="1" BorderBrush = "{ThemeResource ControlAAStrokeColorDisabledBrush}" BorderThickness="3 0 0 3" CornerRadius="10" Background="{ThemeResource CardBackgroundFillColorSecondary}" Padding="10 2 10 2">
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <TextBlock FontWeight="Black" FontSize="18" Text="{x:Bind ViewModel.VehiculeSelectionnee.ChevauxVapeur, Mode=OneWay}"/>
+                        <TextBlock FontWeight="ExtraBlack" FontSize="17" Text=" Ch."/>
+                    </StackPanel>
+                </Border>
+
+                <Border Grid.Row="2" Grid.Column="0" BorderBrush = "{ThemeResource ControlAAStrokeColorDisabledBrush}" BorderThickness="3 0 0 3" CornerRadius="10" Background="{ThemeResource CardBackgroundFillColorSecondary}" Padding="10 2 10 2">
+                    <TextBlock FontWeight="ExtraBlack" FontSize="18" Text="Cylindrée"/>
+                </Border>
+                <Border Grid.Row="2" Grid.Column="1" BorderBrush = "{ThemeResource ControlAAStrokeColorDisabledBrush}" BorderThickness="3 0 0 3" CornerRadius="10" Background="{ThemeResource CardBackgroundFillColorSecondary}" Padding="10 2 10 2">
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <TextBlock FontWeight="Black" FontSize="18" Text="{x:Bind ViewModel.VehiculeSelectionnee.NombreCylindres, Mode=OneWay}"/>
+                        <TextBlock FontWeight="ExtraBlack" FontSize="17" Text=" L"/>
+                    </StackPanel>
+                </Border>
+            </Grid>
+            
+            <Grid Grid.Row="1" Grid.Column="3" BorderBrush="{ThemeResource ControlAAStrokeColorDefault}" BorderThickness="0 0 0 2.5" Padding="20 10 20 8" RowSpacing="12" ColumnSpacing="18">
+                <StackPanel Orientation="Vertical" BorderBrush="{ThemeResource ControlAAStrokeColorDisabledBrush}" BorderThickness="3 0 0 3" CornerRadius="10" Background="{ThemeResource CardBackgroundFillColorSecondary}" Spacing="15" Padding="10 0">
+                    <TextBlock FontSize="18" Text="État du véhicule" FontWeight="ExtraBlack" HorizontalAlignment="Center"/>
+                    <Border BorderBrush="{ThemeResource ControlAltFillColorDisabledBrush}" Background="{ThemeResource SurfaceStrokeColorDefault}" Width="400" Height="30" CornerRadius="15">
+                        <Canvas>
+                            <Border Height="28" CornerRadius="15">
+                                <Rectangle Fill="{ThemeResource SurfaceStrokeColorDefault}" Height="30" Width="{x:Bind ViewModel.EtatVehicule}" HorizontalAlignment="Left"/>
+                            </Border>
+                        </Canvas>
+                    </Border>
+                    <Button BorderBrush="{ThemeResource ControlAAStrokeColorDisabledBrush}" BorderThickness="3 0 0 3" CornerRadius="12" HorizontalAlignment="Center" Margin="0 -8 0 -8" Click="EffecturEntretien_Click">Effectuer un entretien</Button>
+                </StackPanel>
+            </Grid>
+
+            <Grid Grid.Row="2" Grid.Column="0" BorderThickness="0 0 2.5 0" Padding="0 20 20 0" Margin="20 0 0 0" RowSpacing="12" ColumnSpacing="18" BorderBrush="{ThemeResource ControlAAStrokeColorDefault}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Border Grid.Row="0" Grid.Column="0" BorderBrush = "{ThemeResource ControlAAStrokeColorDisabledBrush}" BorderThickness="3 0 0 3" CornerRadius="10" Background="{ThemeResource CardBackgroundFillColorSecondary}" Padding="10 2 10 2">
+                    <TextBlock FontWeight="ExtraBlack" FontSize="18" Text="Boite de vitesse"/>
+                </Border>
+                <Border Grid.Row="0" Grid.Column="1" BorderBrush = "{ThemeResource ControlAAStrokeColorDisabledBrush}" BorderThickness="3 0 0 3" CornerRadius="10" Background="{ThemeResource CardBackgroundFillColorSecondary}" Padding="10 2 10 2">
+                    <TextBlock FontWeight="Black" FontSize="18" Text="{x:Bind ViewModel.VehiculeSelectionnee.BoiteVitesse, Mode=OneWay}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                </Border>
+
+                <Border Grid.Row="1" Grid.Column="0" BorderBrush = "{ThemeResource ControlAAStrokeColorDisabledBrush}" BorderThickness="3 0 0 3" CornerRadius="10" Background="{ThemeResource CardBackgroundFillColorSecondary}" Padding="10 2 10 2">
+                    <TextBlock FontWeight="ExtraBlack" FontSize="18" Text="Transmission"/>
+                </Border>
+                <Border Grid.Row="1" Grid.Column="1" BorderBrush = "{ThemeResource ControlAAStrokeColorDisabledBrush}" BorderThickness="3 0 0 3" CornerRadius="10" Background="{ThemeResource CardBackgroundFillColorSecondary}" Padding="10 2 10 2">
+                    <TextBlock FontWeight="Black" FontSize="18" Text="{x:Bind ViewModel.VehiculeSelectionnee.Transmission, Mode=OneWay}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                </Border>
+
+                <Border Grid.Row="2" Grid.Column="0" BorderBrush = "{ThemeResource ControlAAStrokeColorDisabledBrush}" BorderThickness="3 0 0 3" CornerRadius="10" Background="{ThemeResource CardBackgroundFillColorSecondary}" Padding="10 2 10 2">
+                    <TextBlock FontWeight="ExtraBlack" FontSize="18" Text="Carrosserie"/>
+                </Border>
+                <Border Grid.Row="2" Grid.Column="1" BorderBrush = "{ThemeResource ControlAAStrokeColorDisabledBrush}" BorderThickness="3 0 0 3" CornerRadius="10" Background="{ThemeResource CardBackgroundFillColorSecondary}" Padding="10 2 10 2">
+                    <TextBlock FontWeight="Black" FontSize="18" Text="{x:Bind ViewModel.Carrosserie, Mode=OneWay}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                </Border>
+
+                <Border Grid.Row="3" Grid.Column="0" BorderBrush = "{ThemeResource ControlAAStrokeColorDisabledBrush}" BorderThickness="3 0 0 3" CornerRadius="10" Background="{ThemeResource CardBackgroundFillColorSecondary}" Padding="10 2 10 2">
+                    <TextBlock FontWeight="ExtraBlack" FontSize="18" Text="Sportive"/>
+                </Border>
+                <Border Grid.Row="3" Grid.Column="1" BorderBrush = "{ThemeResource ControlAAStrokeColorDisabledBrush}" BorderThickness="3 0 0 3" CornerRadius="10" Background="{ThemeResource CardBackgroundFillColorSecondary}" Padding="10 2 10 2">
+                    <TextBlock FontWeight="Black" FontSize="18" Text="{x:Bind ViewModel.EstSportive, Mode=OneWay}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                </Border>
+
+                <Border Grid.Row="4" Grid.Column="0" BorderBrush = "{ThemeResource ControlAAStrokeColorDisabledBrush}" BorderThickness="3 0 0 3" CornerRadius="10" Background="{ThemeResource CardBackgroundFillColorSecondary}" Padding="10 2 10 2">
+                    <TextBlock FontWeight="ExtraBlack" FontSize="18" Text="Décapotable"/>
+                </Border>
+                <Border Grid.Row="4" Grid.Column="1" BorderBrush = "{ThemeResource ControlAAStrokeColorDisabledBrush}" BorderThickness="3 0 0 3" CornerRadius="10" Background="{ThemeResource CardBackgroundFillColorSecondary}" Padding="10 2 10 2">
+                    <TextBlock FontWeight="Black" FontSize="18" Text="{x:Bind ViewModel.EstDecapotable, Mode=OneWay}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                </Border>
+
+                <Border Grid.Row="5" Grid.Column="0" BorderBrush = "{ThemeResource ControlAAStrokeColorDisabledBrush}" BorderThickness="3 0 0 3" CornerRadius="10" Background="{ThemeResource CardBackgroundFillColorSecondary}" Padding="10 2 10 2">
+                    <TextBlock FontWeight="ExtraBlack" FontSize="18" Text="Essuie-glace arrière"/>
+                </Border>
+                <Border Grid.Row="5" Grid.Column="1" BorderBrush = "{ThemeResource ControlAAStrokeColorDisabledBrush}" BorderThickness="3 0 0 3" CornerRadius="10" Background="{ThemeResource CardBackgroundFillColorSecondary}" Padding="10 2 10 2">
+                    <TextBlock FontWeight="Black" FontSize="18" Text="{x:Bind ViewModel.AEssuieGlacesArriere, Mode=OneWay}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                </Border>
+            </Grid>
+
+            <Grid Grid.Row="2" Grid.Column="1" BorderBrush="{ThemeResource ControlAAStrokeColorDefault}" BorderThickness="0 0 3 0" Padding="20" RowSpacing="12" ColumnSpacing="16">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Border Grid.Row="0" Grid.Column="0" BorderBrush = "{ThemeResource ControlAAStrokeColorDisabledBrush}" BorderThickness="3 0 0 3" CornerRadius="10" Background="{ThemeResource CardBackgroundFillColorSecondary}" Padding="10 2 10 2">
+                    <TextBlock FontWeight="ExtraBlack" FontSize="18" Text="Vitesse maximale"/>
+                </Border>
+                <Border Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Stretch" BorderBrush = "{ThemeResource ControlAAStrokeColorDisabledBrush}" BorderThickness="3 0 0 3" CornerRadius="10" Background="{ThemeResource CardBackgroundFillColorSecondary}">
+                    <StackPanel Orientation="Horizontal" Spacing="4" Padding="10 2 10 2" VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <TextBlock FontWeight="Black" FontSize="18" Text="{x:Bind ViewModel.VehiculeSelectionnee.VitesseMax, Mode=OneWay}"/>
+                        <TextBlock FontWeight="Black" FontSize="16" Text="km/h"/>
+                    </StackPanel>
+                </Border>
+                <Border Grid.Row="1" Grid.Column="0" BorderBrush = "{ThemeResource ControlAAStrokeColorDisabledBrush}" BorderThickness="3 0 0 3" CornerRadius="10" Background="{ThemeResource CardBackgroundFillColorSecondary}" Padding="10 2 10 2">
+                    <TextBlock FontWeight="ExtraBlack" FontSize="18" Text="Vitesse autorisée"/>
+                </Border>
+                <Border Grid.Row="1" Grid.Column="1" BorderBrush = "{ThemeResource ControlAAStrokeColorDisabledBrush}" BorderThickness="3 0 0 3" CornerRadius="10" Background="{ThemeResource CardBackgroundFillColorSecondary}" VerticalAlignment="Center" HorizontalAlignment="Stretch">
+                    <StackPanel Orientation="Horizontal" Spacing="4" Padding="10 2 10 2" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <TextBlock FontWeight="Black" FontSize="18" Text="{x:Bind ViewModel.VitesseMaxAutorisee, Mode=OneWay}" HorizontalAlignment="Left"/>
+                        <TextBlock FontWeight="Black" FontSize="16" Text=" km/h" Visibility="{x:Bind ViewModel.VitesseMaxAutoriseeKmh, Mode=OneWay}" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                    </StackPanel>
+                </Border>
+                <Border Grid.Row="2" Grid.Column="0" BorderBrush = "{ThemeResource ControlAAStrokeColorDisabledBrush}" BorderThickness="3 0 0 3" CornerRadius="10" Background="{ThemeResource CardBackgroundFillColorSecondary}" Padding="10 2 10 2">
+                    <TextBlock FontWeight="ExtraBlack" FontSize="18" Text="Homologué route"/>
+                </Border>
+                <Border Grid.Row="2" Grid.Column="1" BorderBrush = "{ThemeResource ControlAAStrokeColorDisabledBrush}" BorderThickness="3 0 0 3" CornerRadius="10" Background="{ThemeResource CardBackgroundFillColorSecondary}" Padding="10 2 10 2">
+                    <TextBlock FontWeight="ExtraBlack" FontSize="18" Text="{x:Bind ViewModel.EstHomologueRoute, Mode=OneWay}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                </Border>
+
+                <Border Grid.Row="3" Grid.Column="0" BorderBrush = "{ThemeResource ControlAAStrokeColorDisabledBrush}" BorderThickness="3 0 0 3" CornerRadius="10" Background="{ThemeResource CardBackgroundFillColorSecondary}" Padding="10 2 10 2">
+                    <TextBlock FontWeight="ExtraBlack" FontSize="18" Text="Poids maximal"/>
+                </Border>
+                <Border Grid.Row="3" Grid.Column="1" BorderBrush = "{ThemeResource ControlAAStrokeColorDisabledBrush}" BorderThickness="3 0 0 3" CornerRadius="10" Background="{ThemeResource CardBackgroundFillColorSecondary}" Padding="10 2 10 2">
+                    <TextBlock FontWeight="ExtraBlack" FontSize="18" Text="{x:Bind ViewModel.PoidsMax, Mode=OneWay}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                </Border>
+
+                <Border Grid.Row="4" Grid.Column="0" BorderBrush = "{ThemeResource ControlAAStrokeColorDisabledBrush}" BorderThickness="3 0 0 3" CornerRadius="10" Background="{ThemeResource CardBackgroundFillColorSecondary}" Padding="10 2 10 2">
+                    <TextBlock FontWeight="ExtraBlack" FontSize="18" Text="Charge maximale"/>
+                </Border>
+                <Border Grid.Row="4" Grid.Column="1" BorderBrush = "{ThemeResource ControlAAStrokeColorDisabledBrush}" BorderThickness="3 0 0 3" CornerRadius="10" Background="{ThemeResource CardBackgroundFillColorSecondary}" Padding="10 2 10 2">
+                    <TextBlock FontWeight="ExtraBlack" FontSize="18" Text="{x:Bind ViewModel.ChargementMax, Mode=OneWay}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                </Border>
+
+                <Border Grid.Row="5" Grid.Column="0" BorderBrush = "{ThemeResource ControlAAStrokeColorDisabledBrush}" BorderThickness="3 0 0 3" CornerRadius="10" Background="{ThemeResource CardBackgroundFillColorSecondary}" Padding="10 2 10 2">
+                    <TextBlock FontWeight="ExtraBlack" FontSize="18" Text="Hauteur maximum"/>
+                </Border>
+                <Border Grid.Row="5" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Stretch" BorderBrush = "{ThemeResource ControlAAStrokeColorDisabledBrush}" BorderThickness="3 0 0 3" CornerRadius="10" Background="{ThemeResource CardBackgroundFillColorSecondary}" >
+                    <StackPanel Padding="10 2 10 2" Orientation="Horizontal" HorizontalAlignment="Center">
+                        <TextBlock FontWeight="ExtraBlack" FontSize="18" Text="{x:Bind ViewModel.Hauteur, Mode=OneWay}"/>
+                        <TextBlock FontWeight="ExtraBlack" FontSize="18" Text=" m" Visibility="{x:Bind ViewModel.HauteurMetre, Mode=OneWay}"/>
+                    </StackPanel>
+                </Border>
+            </Grid>
+
+            <Grid Grid.Row="2" Grid.Column="2" BorderBrush="{ThemeResource ControlAAStrokeColorDefault}" BorderThickness="0 0 3 0" Padding="20 20 20 0" RowSpacing="12" ColumnSpacing="16">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Border Grid.Row="0" Grid.Column="0" BorderBrush = "{ThemeResource ControlAAStrokeColorDisabledBrush}" BorderThickness="3 0 0 3" CornerRadius="10" Background="{ThemeResource CardBackgroundFillColorSecondary}" Padding="10 2 10 2">
+                    <TextBlock FontWeight="ExtraBlack" FontSize="18" Text="Roues"/>
+                </Border>
+                <Border Grid.Row="0" Grid.Column="1" BorderBrush = "{ThemeResource ControlAAStrokeColorDisabledBrush}" BorderThickness="3 0 0 3" CornerRadius="10" Background="{ThemeResource CardBackgroundFillColorSecondary}" Padding="10 2 10 2">
+                    <TextBlock FontWeight="Black" FontSize="18" Text="{x:Bind ViewModel.VehiculeSelectionnee.NombreRoues, Mode=OneWay}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                </Border>
+
+                <Border Grid.Row="1" Grid.Column="0" BorderBrush = "{ThemeResource ControlAAStrokeColorDisabledBrush}" BorderThickness="3 0 0 3" CornerRadius="10" Background="{ThemeResource CardBackgroundFillColorSecondary}" Padding="10 2 10 2">
+                    <TextBlock FontWeight="ExtraBlack" FontSize="18" Text="Passagers"/>
+                </Border>
+                <Border Grid.Row="1" Grid.Column="1" BorderBrush = "{ThemeResource ControlAAStrokeColorDisabledBrush}" BorderThickness="3 0 0 3" CornerRadius="10" Background="{ThemeResource CardBackgroundFillColorSecondary}" Padding="10 2 10 2">
+                    <TextBlock FontWeight="Black" FontSize="18" Text="{x:Bind ViewModel.VehiculeSelectionnee.NombrePassagers, Mode=OneWay}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                </Border>
+
+                <Border Grid.Row="2" Grid.Column="0" BorderBrush = "{ThemeResource ControlAAStrokeColorDisabledBrush}" BorderThickness="3 0 0 3" CornerRadius="10" Background="{ThemeResource CardBackgroundFillColorSecondary}" Padding="10 2 10 2">
+                    <TextBlock FontWeight="ExtraBlack" FontSize="18" Text="Portes"/>
+                </Border>
+                <Border Grid.Row="2" Grid.Column="1" BorderBrush = "{ThemeResource ControlAAStrokeColorDisabledBrush}" BorderThickness="3 0 0 3" CornerRadius="10" Background="{ThemeResource CardBackgroundFillColorSecondary}" Padding="10 2 10 2">
+                    <TextBlock FontWeight="Black" FontSize="18" Text="{x:Bind ViewModel.VehiculeSelectionnee.NombrePortes, Mode=OneWay}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                </Border>
+
+                <Border Grid.Row="3" Grid.Column="0" BorderBrush = "{ThemeResource ControlAAStrokeColorDisabledBrush}" BorderThickness="3 0 0 3" CornerRadius="10" Background="{ThemeResource CardBackgroundFillColorSecondary}" Padding="10 2 10 2">
+                    <TextBlock FontWeight="ExtraBlack" FontSize="18" Text="Roue de secours"/>
+                </Border>
+                <Border Grid.Row="3" Grid.Column="1" BorderBrush = "{ThemeResource ControlAAStrokeColorDisabledBrush}" BorderThickness="3 0 0 3" CornerRadius="10" Background="{ThemeResource CardBackgroundFillColorSecondary}" Padding="10 2 10 2">
+                    <TextBlock FontWeight="Black" FontSize="18" Text="{x:Bind ViewModel.ARoueDeSecours, Mode=OneWay}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                </Border>
+
+                <Border Grid.Row="4" Grid.Column="0" BorderBrush = "{ThemeResource ControlAAStrokeColorDisabledBrush}" BorderThickness="3 0 0 3" CornerRadius="10" Background="{ThemeResource CardBackgroundFillColorSecondary}" Padding="10 2 10 2">
+                    <TextBlock FontWeight="ExtraBlack" FontSize="18" Text="Permis spécial"/>
+                </Border>
+                <Border Grid.Row="4" Grid.Column="1" BorderBrush = "{ThemeResource ControlAAStrokeColorDisabledBrush}" BorderThickness="3 0 0 3" CornerRadius="10" Background="{ThemeResource CardBackgroundFillColorSecondary}" Padding="10 2 10 2">
+                    <TextBlock FontWeight="Black" FontSize="18" Text="{x:Bind ViewModel.PermisSpecial, Mode=OneWay}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                </Border>
+
+                <Border Grid.Row="5" Grid.Column="0" BorderBrush = "{ThemeResource ControlAAStrokeColorDisabledBrush}" BorderThickness="3 0 0 3" CornerRadius="10" Background="{ThemeResource CardBackgroundFillColorSecondary}" Padding="10 2 10 2">
+                    <StackPanel>
+                        <TextBlock FontWeight="ExtraBlack" FontSize="18" Text="Type" Visibility="{x:Bind ViewModel.TypeVehiculeVisible}"/>
+                        <TextBlock FontWeight="ExtraBlack" FontSize="18" Text="Domaine" Visibility="{x:Bind ViewModel.DomaineVisible}"/>
+                    </StackPanel>
+                </Border>
+                <Border Grid.Row="5" Grid.Column="1" BorderBrush = "{ThemeResource ControlAAStrokeColorDisabledBrush}" BorderThickness="3 0 0 3" CornerRadius="10" Background="{ThemeResource CardBackgroundFillColorSecondary}" Padding="10 2 10 2">
+                    <StackPanel>
+                        <TextBlock FontWeight="Black" FontSize="18" Text="{x:Bind ViewModel.TypeVehicule, Mode=OneWay}" Visibility="{x:Bind ViewModel.TypeVehiculeVisible}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        <TextBlock FontWeight="Black" FontSize="18" Text="{x:Bind ViewModel.Domaine, Mode=OneWay}" Visibility="{x:Bind ViewModel.DomaineVisible}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </Border>
+            </Grid>
+
+            <Grid Grid.Row="2" Grid.Column="3" Padding="0 20 0 0" RowSpacing="12" ColumnSpacing="18">
+                <StackPanel Orientation="Vertical">
+                    <StackPanel Orientation="Vertical" Spacing="10" BorderBrush = "{ThemeResource ControlAAStrokeColorDisabledBrush}" BorderThickness="3 0 0 3" CornerRadius="10" Background="{ThemeResource CardBackgroundFillColorSecondary}" Padding="10 2 10 2" Width="420" Height="100" Margin="0 0 0 0">
+                        <TextBlock FontWeight="ExtraBlack" FontSize="26" Text="Prix du constructeur actuel" TextAlignment="Center"/>
+                        <TextBlock FontWeight="Black" FontSize="32" Text="{x:Bind ViewModel.VehiculeSelectionnee.PrixConstructeurActuel, Mode=OneWay, Converter={StaticResource ArgentToFormatConverter}}" HorizontalAlignment="Center" CharacterSpacing="100"/>
+                    </StackPanel>
+
+                    <TextBlock Text="{x:Bind ViewModel.VehiculeSelectionnee.ObtenirRapportPrixActuelAchat(), Mode=OneWay}" HorizontalAlignment="Center" FontWeight="ExtraBlack" FontSize="48"></TextBlock>
+
+                    <StackPanel Orientation="Vertical" Spacing="10" BorderBrush = "{ThemeResource ControlAAStrokeColorDisabledBrush}" BorderThickness="3 0 0 3" CornerRadius="10" Background="{ThemeResource CardBackgroundFillColorSecondary}" Padding="10 2 10 2" Width="420" Height="100" Margin="0 0 0 0">
+                        <TextBlock FontWeight="ExtraBlack" FontSize="26" Text="Prix du constructeur à l'achat" TextAlignment="Center"/>
+                        <TextBlock FontWeight="Black" FontSize="32" Text="{x:Bind ViewModel.VehiculeSelectionnee.PrixConstructeurAchat, Mode=OneWay, Converter={StaticResource ArgentToFormatConverter}}" HorizontalAlignment="Center" CharacterSpacing="100"/>
+                    </StackPanel>
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </ScrollView>
+</Page>
