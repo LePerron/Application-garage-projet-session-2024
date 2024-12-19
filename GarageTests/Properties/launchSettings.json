@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "GarageTests (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "GarageTests (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}
